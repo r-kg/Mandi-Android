@@ -4,7 +4,7 @@ import androidx.annotation.LayoutRes
 import com.rkg.mandi.R
 import com.rkg.mandi.presentation.binding.SimpleDiffCallback.*
 
-sealed class MainItemModel(@LayoutRes layoutResId: Int) : DiffCallback {
+sealed class MainItemModel(@LayoutRes val layoutResId: Int) : DiffCallback {
 
     data class MandiItemModel(
         val id: Int
