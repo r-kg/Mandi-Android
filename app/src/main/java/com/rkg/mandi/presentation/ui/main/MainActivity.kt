@@ -1,9 +1,13 @@
 package com.rkg.mandi.presentation.ui.main
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.rkg.mandi.R
 import com.rkg.mandi.databinding.MainActivityBinding
+import com.rkg.mandi.presentation.binding.SimpleDataBindingPresenter
+import com.rkg.mandi.presentation.model.MainItemModel
 import com.rkg.mandi.presentation.ui.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,5 +22,24 @@ class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity) {
         super.onCreate(savedInstanceState)
 
         binding.vm = viewModel
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.title = ""
+
+        initViews()
+    }
+
+    private fun initViews() {
+        listAdapter = MainListAdapter(object : SimpleDataBindingPresenter() {
+            override fun onClick(view: View, item: Any) {
+                when (item) {
+                    is MainItemModel.MandiItemModel -> {}
+                }
+            }
+        })
+
+        binding.rvMain.apply {
+            adapter = listAdapter
+            layoutManager = LinearLayoutManager(context)
+        }
     }
 }
