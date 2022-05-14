@@ -6,6 +6,10 @@
         <variable
             name="presenter"
             type="com.rkg.mandi.presentation.binding.DataBindingPresenter" />
+
+        <variable
+            name="item"
+            type="com.rkg.mandi.presentation.model.MainItemModel.MandiItemModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

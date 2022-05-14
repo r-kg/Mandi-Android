@@ -14,7 +14,7 @@ abstract class DataBindingViewHolder<T>(internal val binding: ViewDataBinding) :
 
     fun bind(item: T, presenter: DataBindingPresenter? = null) {
         presenter?.let {
-            //binding.setVariable(BR.presenter, it)
+            binding.setVariable(BR.presenter, it)
         }
         bindItem(item)
         binding.executePendingBindings()
