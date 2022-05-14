@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">만디</string>
+    <string name="streak">연속</string>
+
+    <string name="content_desc_plant">심기</string>
 </resources>
