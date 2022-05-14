@@ -9,6 +9,8 @@ import javax.inject.Singleton
 class MandiRepository @Inject constructor(
     private val localDataSource: AppDatabase
 ) {
+    fun selectAll() = localDataSource.mandiDao().selectAll()
+
     suspend fun insert(mandiEntity: MandiEntity) =
-        localDataSource.mandiDao().insertMandi(mandiEntity)
+        localDataSource.mandiDao().insert(mandiEntity)
 }
