@@ -7,7 +7,8 @@ import com.rkg.mandi.presentation.binding.SimpleDiffCallback.*
 sealed class MainItemModel(@LayoutRes val layoutResId: Int) : DiffCallback {
 
     data class MandiItemModel(
-        val id: Int
+        val id: Int,
+        val title: String
     ) : MainItemModel(R.layout.main_mandi_item_model)
 
     override fun areItemsTheSame(other: DiffCallback): Boolean {

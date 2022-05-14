@@ -9,9 +9,17 @@ import kotlinx.parcelize.Parcelize
 @Entity
 @Parcelize
 class MandiEntity(
-    @PrimaryKey(autoGenerate = true) var id: Int = 0
+    @PrimaryKey(autoGenerate = true) var id: Int = 0,
+    val title: String,
+    val description: String,
+    val updatedAt: Double,
+    val streakStartedAt: Double?
 ) : Parcelable
 
 fun MandiEntity.toDomain() = Mandi(
-    id = id
+    id = id,
+    title = title,
+    description = description,
+    updatedAt = updatedAt,
+    streakStartedAt = streakStartedAt
 )
