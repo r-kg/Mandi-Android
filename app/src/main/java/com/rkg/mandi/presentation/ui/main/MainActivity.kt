@@ -12,6 +12,7 @@ import com.rkg.mandi.R
 import com.rkg.mandi.databinding.MainActivityBinding
 import com.rkg.mandi.presentation.binding.SimpleDataBindingPresenter
 import com.rkg.mandi.presentation.model.MainItemModel
+import com.rkg.mandi.presentation.model.state.StateResult
 import com.rkg.mandi.presentation.ui.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -33,6 +34,8 @@ class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity) {
 
         initViews()
         initObserves()
+
+        viewModel.fetchMandiFlow()
     }
 
     private fun initViews() {
@@ -50,8 +53,22 @@ class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity) {
         }
     }
 
-    private fun initObserves() {
-
+    private fun initObserves() = lifecycleScope.launch {
+        repeatOnLifecycle(Lifecycle.State.STARTED) {
+            launch {
+                viewModel.itemModels.collect { data ->
+                    when (data) {
+                        is StateResult.Success -> {
+                            listAdapter.submitList(data.item)
+                        }
+                        is StateResult.Failure -> {
+                            listAdapter.submitList(null)
+                        }
+                        else -> {}
+                    }
+                }
+            }
+        }
     }
 
 }
