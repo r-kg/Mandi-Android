@@ -12,10 +12,12 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rkg.mandi.R
 import com.rkg.mandi.databinding.MainActivityBinding
+import com.rkg.mandi.presentation.binding.MandiTapEvent
 import com.rkg.mandi.presentation.binding.SimpleDataBindingPresenter
 import com.rkg.mandi.presentation.model.MainItemModel
 import com.rkg.mandi.presentation.model.state.StateResult
 import com.rkg.mandi.presentation.ui.BaseActivity
+import com.rkg.mandi.presentation.utils.launchPlantActivityForResult
 import com.rkg.mandi.presentation.utils.startNewMandiActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -52,7 +54,9 @@ class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity) {
         listAdapter = MainListAdapter(object : SimpleDataBindingPresenter() {
             override fun onClick(view: View, item: Any) {
                 when (item) {
-                    is MainItemModel.MandiItemModel -> {}
+                    is MandiTapEvent.PlantTap -> {
+                        launchPlantActivityForResult(plantLauncher)
+                    }
                 }
             }
         })
