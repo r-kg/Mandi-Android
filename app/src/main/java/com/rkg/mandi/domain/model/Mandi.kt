@@ -10,7 +10,7 @@ data class Mandi(
     val id: Int = 0,
     val title: String,
     val description: String,
-    val updatedAt: Double,
+    val updatedAt: Double? = null,
     val streakStartedAt: Double? = null
 ) : Parcelable
 

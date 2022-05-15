@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Mandi</string>
+    <string name="plant">Plant</string>
     <string name="streak">Streak</string>
+    <string name="done">Done</string>
+    <string name="title_new_mandi">New Mandi</string>
+    <string name="hint_new_mandi_title">Type your Mandi here for daily plant</string>
+    <string name="hint_new_mandi_desc">Type more information of Mandi or your memo</string>
 
     <string name="content_desc_plant">Plant</string>
 </resources>

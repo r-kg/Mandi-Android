@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">만디</string>
+    <string name="plant">심기</string>
     <string name="streak">연속</string>
+    <string name="done">완료</string>
+    <string name="title_new_mandi">새 만디</string>
+    <string name="hint_new_mandi_title">매일매일 기록할 만디를 적어주세요</string>
+    <string name="hint_new_mandi_desc">만디에 대한 설명이나 메모를 추가로 적어주세요</string>
 
     <string name="content_desc_plant">심기</string>
 </resources>
