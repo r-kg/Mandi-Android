@@ -16,15 +16,20 @@ class NewMandiViewModel @Inject constructor(
 
     private val _title = MutableStateFlow("")
     private val _description = MutableStateFlow("")
+    private val _isLoading = MutableStateFlow(false)
 
     val title: StateFlow<String> = _title
     val description = _description
+    val isLoading = _isLoading
 
     val isEditDone = title.combine(description) { t, d ->
         t.isNotBlank() && d.isNotBlank()
     }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
     fun addMandi() = viewModelScope.launch {
+        if (_isLoading.value) return@launch
+
+        _isLoading.value = true
         useCase.insertMandi(
             Mandi(title = title.value, description = description.value)
         )

@@ -3,13 +3,11 @@ package com.rkg.mandi.presentation.ui.new_mandi
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -21,6 +19,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.rkg.mandi.R
 import com.rkg.mandi.presentation.utils.findActivity
 import com.rkg.mandi.presentation.widget.compose.ColumnDivider
+import com.rkg.mandi.presentation.widget.compose.LoadingProgress
 import com.rkg.mandi.presentation.widget.compose.NoStyleTextField
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -45,6 +44,7 @@ fun ActivityView() {
     val description: String by viewModel.description.collectAsState()
 
     val isDoneEnabled: Boolean by viewModel.isEditDone.collectAsState()
+    val isLoading: Boolean by viewModel.isLoading.collectAsState()
 
     Scaffold(
         topBar = {
@@ -76,6 +76,10 @@ fun ActivityView() {
                 hint = stringResource(id = R.string.hint_new_mandi_desc)
             )
         }
+    }
+
+    if (isLoading) {
+        LoadingProgress()
     }
 }
 
