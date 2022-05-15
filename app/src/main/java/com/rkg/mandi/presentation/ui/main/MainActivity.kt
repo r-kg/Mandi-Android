@@ -6,7 +6,6 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,7 +17,6 @@ import com.rkg.mandi.presentation.model.state.StateResult
 import com.rkg.mandi.presentation.ui.BaseActivity
 import com.rkg.mandi.presentation.utils.startNewMandiActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -81,7 +79,7 @@ class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity) {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.menu_plant -> {
+            R.id.new_mandi -> {
                 startNewMandiActivity()
                 true
             }
