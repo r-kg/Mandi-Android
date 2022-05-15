@@ -17,6 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.rkg.mandi.R
+import com.rkg.mandi.presentation.ui.new_mandi.NewMandiViewModel.*
 import com.rkg.mandi.presentation.utils.findActivity
 import com.rkg.mandi.presentation.widget.compose.ColumnDivider
 import com.rkg.mandi.presentation.widget.compose.LoadingProgress
@@ -44,7 +45,7 @@ fun ActivityView() {
     val description: String by viewModel.description.collectAsState()
 
     val isDoneEnabled: Boolean by viewModel.isEditDone.collectAsState()
-    val isLoading: Boolean by viewModel.isLoading.collectAsState()
+    val state: NewMandiState by viewModel.state.collectAsState()
 
     Scaffold(
         topBar = {
@@ -78,8 +79,10 @@ fun ActivityView() {
         }
     }
 
-    if (isLoading) {
-        LoadingProgress()
+    when (state) {
+        is NewMandiState.Loading -> LoadingProgress()
+        is NewMandiState.Success -> activity?.finish()
+        else -> {}
     }
 }
 
