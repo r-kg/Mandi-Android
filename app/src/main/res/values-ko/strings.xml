@@ -3,6 +3,8 @@
     <string name="app_name">만디</string>
     <string name="plant">심기</string>
     <string name="streak">연속</string>
+    <string name="title_new_mandi">새 만디</string>
+    <string name="hint_new_mandi_title">매일매일 기록할 만디를 적어주세요</string>
 
     <string name="content_desc_plant">심기</string>
 </resources>

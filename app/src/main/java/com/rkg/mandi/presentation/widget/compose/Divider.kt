@@ -16,7 +16,7 @@ import com.rkg.mandi.R
 fun ColumnDivider(
     modifier: Modifier = Modifier,
     color: Color = colorResource(id = R.color.gray40),
-    margin: Int = 16
+    margin: Int = 8
 ) {
     Box(
         modifier = modifier
