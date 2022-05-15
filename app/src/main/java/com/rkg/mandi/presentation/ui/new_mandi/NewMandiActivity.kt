@@ -9,10 +9,15 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.rkg.mandi.R
+import com.rkg.mandi.presentation.utils.findActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NewMandiActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,12 +31,11 @@ class NewMandiActivity : ComponentActivity() {
 
 @Composable
 fun ActivityView() {
-    Scaffold(
-        topBar = {
-            AppBar {
+    val activity = LocalContext.current.findActivity()
+    val viewModel: NewMandiViewModel = viewModel()
 
-            }
-        },
+    Scaffold(
+        topBar = { AppBar { activity?.finish() } },
     ) {
 
     }
