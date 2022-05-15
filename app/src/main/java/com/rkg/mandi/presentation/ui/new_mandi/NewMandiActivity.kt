@@ -47,7 +47,13 @@ fun ActivityView() {
     val isDoneEnabled: Boolean by viewModel.isEditDone.collectAsState()
 
     Scaffold(
-        topBar = { AppBar(onClick = { activity?.finish() }, onEditDone = {}, isDoneEnabled) },
+        topBar = {
+            AppBar(
+                onClick = { activity?.finish() },
+                onEditDone = { viewModel.addMandi() },
+                isDoneEnabled
+            )
+        },
     ) {
         Column(
             Modifier

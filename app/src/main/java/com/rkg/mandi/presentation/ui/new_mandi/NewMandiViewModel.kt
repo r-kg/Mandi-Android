@@ -1,13 +1,18 @@
 package com.rkg.mandi.presentation.ui.new_mandi
 
 import androidx.lifecycle.viewModelScope
+import com.rkg.mandi.domain.model.Mandi
+import com.rkg.mandi.domain.usecase.MandiUseCase
 import com.rkg.mandi.presentation.ui.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class NewMandiViewModel @Inject constructor() : BaseViewModel() {
+class NewMandiViewModel @Inject constructor(
+    private val useCase: MandiUseCase
+) : BaseViewModel() {
 
     private val _title = MutableStateFlow("")
     private val _description = MutableStateFlow("")
@@ -19,6 +24,11 @@ class NewMandiViewModel @Inject constructor() : BaseViewModel() {
         t.isNotBlank() && d.isNotBlank()
     }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
+    fun addMandi() = viewModelScope.launch {
+        useCase.insertMandi(
+            Mandi(title = title.value, description = description.value)
+        )
+    }
 
     fun setTitle(value: String) {
         _title.value = value

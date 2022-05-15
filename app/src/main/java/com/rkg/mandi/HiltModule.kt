@@ -18,5 +18,6 @@ object HiltModule {
     @Singleton
     @Provides
     fun provideDatabase(@ApplicationContext context: Context) =
-        Room.databaseBuilder(context, AppDatabase::class.java, AppDatabase.DATABASE_LABEL).build()
+        Room.databaseBuilder(context, AppDatabase::class.java, AppDatabase.DATABASE_LABEL)
+            .fallbackToDestructiveMigration().build()
 }

@@ -12,7 +12,7 @@ class MandiEntity(
     @PrimaryKey(autoGenerate = true) var id: Int = 0,
     val title: String,
     val description: String,
-    val updatedAt: Double,
+    val updatedAt: Double?,
     val streakStartedAt: Double?
 ) : Parcelable
 
