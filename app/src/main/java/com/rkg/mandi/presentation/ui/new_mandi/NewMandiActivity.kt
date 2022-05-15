@@ -41,6 +41,7 @@ fun ActivityView() {
     val viewModel: NewMandiViewModel = viewModel()
 
     var title by remember { mutableStateOf("") }
+    var description by remember { mutableStateOf("") }
 
     Scaffold(
         topBar = { AppBar { activity?.finish() } },
@@ -58,8 +59,12 @@ fun ActivityView() {
                 hint = stringResource(id = R.string.hint_new_mandi_title)
             )
             ColumnDivider()
-
-
+            NoStyleTextField(
+                value = description,
+                onValueChange = { description = it },
+                maxLength = 100,
+                hint = stringResource(id = R.string.hint_new_mandi_desc)
+            )
         }
     }
 }

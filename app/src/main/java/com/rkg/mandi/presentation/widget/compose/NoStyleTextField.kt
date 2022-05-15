@@ -13,7 +13,7 @@ fun NoStyleTextField(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    singleLine: Boolean = true,
+    singleLine: Boolean = false,
     hint: String = "",
     maxLength: Int = Int.MAX_VALUE,
 ) {
