@@ -41,11 +41,13 @@ fun ActivityView() {
     val activity = LocalContext.current.findActivity()
     val viewModel: NewMandiViewModel = viewModel()
 
-    var title by remember { mutableStateOf("") }
-    var description by remember { mutableStateOf("") }
+    val title: String by viewModel.title.collectAsState()
+    val description: String by viewModel.description.collectAsState()
+
+    val isDoneEnabled: Boolean by viewModel.isEditDone.collectAsState()
 
     Scaffold(
-        topBar = { AppBar(onClick = { activity?.finish() }, onEditDone = {}) },
+        topBar = { AppBar(onClick = { activity?.finish() }, onEditDone = {}, isDoneEnabled) },
     ) {
         Column(
             Modifier
@@ -54,15 +56,16 @@ fun ActivityView() {
         ) {
             NoStyleTextField(
                 value = title,
-                onValueChange = { title = it },
-                maxLength = 10,
+                onValueChange = { viewModel.setTitle(it) },
+                maxLength = 20,
                 singleLine = true,
                 hint = stringResource(id = R.string.hint_new_mandi_title)
             )
             ColumnDivider()
             NoStyleTextField(
                 value = description,
-                onValueChange = { description = it },
+                onValueChange = { viewModel.setDescription(it) },
+                modifier = Modifier.fillMaxHeight(),
                 maxLength = 100,
                 hint = stringResource(id = R.string.hint_new_mandi_desc)
             )
@@ -71,7 +74,7 @@ fun ActivityView() {
 }
 
 @Composable
-fun AppBar(onClick: () -> Unit, onEditDone: () -> Unit) {
+fun AppBar(onClick: () -> Unit, onEditDone: () -> Unit, doneEnabled: Boolean) {
     TopAppBar(
         title = { Text(text = stringResource(id = R.string.title_new_mandi)) },
         backgroundColor = Color.White,
@@ -83,7 +86,9 @@ fun AppBar(onClick: () -> Unit, onEditDone: () -> Unit) {
         },
         actions = {
             TextButton(
-                onClick = onEditDone, enabled = false, colors = ButtonDefaults.textButtonColors(
+                onClick = onEditDone,
+                enabled = doneEnabled,
+                colors = ButtonDefaults.textButtonColors(
                     contentColor = colorResource(id = R.color.primary),
                     disabledContentColor = colorResource(id = R.color.gray40)
                 )
