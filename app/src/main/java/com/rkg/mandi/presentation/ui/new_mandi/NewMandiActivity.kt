@@ -13,6 +13,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -44,7 +45,7 @@ fun ActivityView() {
     var description by remember { mutableStateOf("") }
 
     Scaffold(
-        topBar = { AppBar { activity?.finish() } },
+        topBar = { AppBar(onClick = { activity?.finish() }, onEditDone = {}) },
     ) {
         Column(
             Modifier
@@ -70,7 +71,7 @@ fun ActivityView() {
 }
 
 @Composable
-fun AppBar(onClick: () -> Unit) {
+fun AppBar(onClick: () -> Unit, onEditDone: () -> Unit) {
     TopAppBar(
         title = { Text(text = stringResource(id = R.string.title_new_mandi)) },
         backgroundColor = Color.White,
@@ -78,6 +79,16 @@ fun AppBar(onClick: () -> Unit) {
         navigationIcon = {
             IconButton(onClick = onClick) {
                 Icon(painter = painterResource(id = R.drawable.ic_back), contentDescription = null)
+            }
+        },
+        actions = {
+            TextButton(
+                onClick = onEditDone, enabled = false, colors = ButtonDefaults.textButtonColors(
+                    contentColor = colorResource(id = R.color.primary),
+                    disabledContentColor = colorResource(id = R.color.gray40)
+                )
+            ) {
+                Text(text = stringResource(id = R.string.done))
             }
         }
     )
