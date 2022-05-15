@@ -8,6 +8,7 @@ plugins {
 }
 
 android {
+    namespace 'com.rkg.mandi'
     compileSdk 32
 
     defaultConfig {
