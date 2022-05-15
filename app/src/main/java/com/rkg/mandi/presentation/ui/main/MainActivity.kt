@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts.*
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -25,6 +26,14 @@ class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity) {
     private val viewModel: MainViewModel by viewModels()
 
     private lateinit var listAdapter: MainListAdapter
+
+    private val plantLauncher = registerForActivityResult(StartActivityForResult()) {
+        if (it.resultCode == RESULT_OK) {
+            it.data?.data?.let { uri ->
+                // handle uri
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
