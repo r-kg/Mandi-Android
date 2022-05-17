@@ -9,4 +9,8 @@
     <string name="hint_new_mandi_desc">만디에 대한 설명이나 메모를 추가로 적어주세요</string>
 
     <string name="content_desc_plant">심기</string>
+    <string name="content_desc_close">닫기</string>
+    <string name="content_desc_flash">플래쉬</string>
+    <string name="content_desc_flip">뒤집기</string>
+    <string name="content_desc_capture">촬영</string>
 </resources>

@@ -8,4 +8,8 @@
     <string name="hint_new_mandi_desc">Type more information of Mandi or your memo</string>
 
     <string name="content_desc_plant">Plant</string>
+    <string name="content_desc_close">Close</string>
+    <string name="content_desc_flash">Flash</string>
+    <string name="content_desc_flip">Flip</string>
+    <string name="content_desc_capture">Capture</string>
 </resources>
