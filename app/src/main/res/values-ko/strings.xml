@@ -7,6 +7,7 @@
     <string name="title_new_mandi">새 만디</string>
     <string name="hint_new_mandi_title">매일매일 기록할 만디를 적어주세요</string>
     <string name="hint_new_mandi_desc">만디에 대한 설명이나 메모를 추가로 적어주세요</string>
+    <string name="desc_plant">만디에 심어봅시다!\n오늘 한 일을 간단히 사진으로 남겨보세요</string>
 
     <string name="content_desc_plant">심기</string>
     <string name="content_desc_close">닫기</string>
