@@ -2,12 +2,14 @@ package com.rkg.mandi.presentation.ui.main
 
 import androidx.lifecycle.viewModelScope
 import com.rkg.mandi.domain.model.Mandi
+import com.rkg.mandi.domain.model.updatePlant
 import com.rkg.mandi.domain.model.toMandiItemModel
 import com.rkg.mandi.domain.usecase.MandiUseCase
 import com.rkg.mandi.presentation.model.MainItemModel
 import com.rkg.mandi.presentation.model.state.StateResult
 import com.rkg.mandi.presentation.model.state.StateResult.*
 import com.rkg.mandi.presentation.ui.BaseViewModel
+import com.rkg.mandi.utils.CalendarUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -36,10 +38,9 @@ class MainViewModel @Inject constructor(
     fun plant() = viewModelScope.launch {
         withContext(Dispatchers.IO) {
             val mandi = getMandiById(targetMandiId) ?: return@withContext
+            val updated = mandi.updatePlant(CalendarUtil.currentTimeInMillis() / 1000.0)
 
-            // Crate new mandi as updated one
-
-            useCase.update(mandi)
+            useCase.update(updated)
         }
     }
 
@@ -56,7 +57,7 @@ class MainViewModel @Inject constructor(
             }.getOrThrow()
         }
     }
-    
+
     private fun getMandiById(id: Int?): Mandi? {
         return mandiListState.value.firstOrNull { it.id == id }
     }
