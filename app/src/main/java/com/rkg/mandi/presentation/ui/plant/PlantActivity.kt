@@ -2,7 +2,9 @@ package com.rkg.mandi.presentation.ui.plant
 
 import android.Manifest
 import android.content.ContentValues
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -22,10 +24,14 @@ import java.util.concurrent.Executors
 
 class PlantActivity : BaseActivity<PlantActivityBinding>(R.layout.plant_activity) {
 
+    companion object {
+        const val EXTRA_URI = "EXTRA_URI"
+    }
+
     private lateinit var cameraExecutor: ExecutorService
     private var imageCapture: ImageCapture? = null
 
-    private var flashState: FlashState = FlashState.ON
+    private var flashState: FlashState = FlashState.OFF
     private var cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
     private val cameraPermissionLauncher =
@@ -164,13 +170,23 @@ class PlantActivity : BaseActivity<PlantActivityBinding>(R.layout.plant_activity
             ContextCompat.getMainExecutor(this),
             object : ImageCapture.OnImageSavedCallback {
                 override fun onError(exc: ImageCaptureException) {
+                    // show Error Toast
                 }
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                    val msg = "Photo capture succeeded: ${output.savedUri}"
+                    output.savedUri?.let {
+                        setResult(it)
+                    } // ?: show Error Toast
                 }
             }
         )
+    }
+
+    private fun setResult(uri: Uri){
+        setResult(RESULT_OK, Intent().apply {
+            putExtra(EXTRA_URI, uri)
+        })
+        finish()
     }
 
     enum class FlashState(

@@ -1,5 +1,6 @@
 package com.rkg.mandi.presentation.ui.main
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -17,6 +18,7 @@ import com.rkg.mandi.presentation.binding.SimpleDataBindingPresenter
 import com.rkg.mandi.presentation.model.MainItemModel
 import com.rkg.mandi.presentation.model.state.StateResult
 import com.rkg.mandi.presentation.ui.BaseActivity
+import com.rkg.mandi.presentation.ui.plant.PlantActivity
 import com.rkg.mandi.presentation.utils.launchPlantActivityForResult
 import com.rkg.mandi.presentation.utils.startNewMandiActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,9 +33,7 @@ class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity) {
 
     private val plantLauncher = registerForActivityResult(StartActivityForResult()) {
         if (it.resultCode == RESULT_OK) {
-            it.data?.data?.let { uri ->
-                // handle uri
-            }
+            val uri = it.data?.getParcelableExtra<Uri>(PlantActivity.EXTRA_URI)
         }
     }
 
