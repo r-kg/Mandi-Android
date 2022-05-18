@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts.*
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -88,6 +89,21 @@ class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity) {
                     }
                 }
             }
+        }
+    }
+
+    private fun showMandiMenu() {
+        val menus = resources.getStringArray(R.array.choose_mandi_menu)
+        AlertDialog.Builder(this).apply {
+            setItems(menus) { _, which ->
+                when (menus[which]) {
+                    getString(R.string.delete) -> {}
+                    getString(R.string.reset) -> {}
+                    else -> {
+                        // nothing to do
+                    }
+                }
+            }.show()
         }
     }
 
