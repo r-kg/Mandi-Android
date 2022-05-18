@@ -11,6 +11,10 @@ class MandiRepository @Inject constructor(
 ) {
     fun selectAll() = localDataSource.mandiDao().selectAll()
 
+    suspend fun selectById(id: Int) = localDataSource.mandiDao().selectById(id)
+
+    suspend fun update(mandiEntity: MandiEntity) = localDataSource.mandiDao().update(mandiEntity)
+
     suspend fun insert(mandiEntity: MandiEntity) =
         localDataSource.mandiDao().insert(mandiEntity)
 }

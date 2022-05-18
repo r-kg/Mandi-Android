@@ -20,6 +20,16 @@ class MandiUseCase @Inject constructor(
 
     }
 
+    suspend fun selectById(id: Int) = runCatching {
+        repository.selectById(id)
+    }.mapCatching {
+        it.firstOrNull()?.toDomain()
+    }.getOrThrow()
+
+    suspend fun update(mandi: Mandi) = runCatching {
+        repository.update(mandi.toEntity())
+    }.getOrThrow()
+
     suspend fun insertMandi(mandi: Mandi) = runCatching {
         repository.insert(mandi.toEntity())
     }.onFailure { throwable ->
