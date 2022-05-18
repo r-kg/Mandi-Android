@@ -78,10 +78,13 @@
                 android:id="@+id/btnPlant"
                 android:layout_width="64dp"
                 android:layout_height="0dp"
+                android:clickable="true"
+                android:focusable="true"
                 android:background="@android:color/holo_blue_bright"
                 android:contentDescription="@string/content_desc_plant"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_add"
+                android:onClick="@{(view) -> presenter.onClick(view, item.plantTap)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
