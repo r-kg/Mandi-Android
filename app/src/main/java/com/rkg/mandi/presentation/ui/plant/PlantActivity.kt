@@ -1,23 +1,31 @@
 package com.rkg.mandi.presentation.ui.plant
 
 import android.Manifest
+import android.content.ContentValues
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.Preview
+import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import com.rkg.mandi.R
 import com.rkg.mandi.databinding.PlantActivityBinding
 import com.rkg.mandi.presentation.ui.BaseActivity
+import com.rkg.mandi.presentation.utils.setOnSingleClickListener
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 class PlantActivity : BaseActivity<PlantActivityBinding>(R.layout.plant_activity) {
 
     private lateinit var cameraExecutor: ExecutorService
+
+    private var imageCapture: ImageCapture? = null
+
+    private var flashMode: Int = ImageCapture.FLASH_MODE_OFF
 
     private val cameraPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
@@ -49,7 +57,32 @@ class PlantActivity : BaseActivity<PlantActivityBinding>(R.layout.plant_activity
 
         requestCameraPermission()
         cameraExecutor = Executors.newSingleThreadExecutor()
+        initViews()
     }
+
+    private fun initViews() {
+        binding.apply {
+            btnCapture.setOnSingleClickListener { capturePhoto() }
+        }
+    }
+
+    private fun changeFlashMode() {
+        flashMode = when (flashMode) {
+            ImageCapture.FLASH_MODE_OFF -> ImageCapture.FLASH_MODE_ON
+            ImageCapture.FLASH_MODE_ON -> ImageCapture.FLASH_MODE_AUTO
+            ImageCapture.FLASH_MODE_AUTO -> ImageCapture.FLASH_MODE_OFF
+            else -> ImageCapture.FLASH_MODE_OFF
+        }
+
+        bindImageCapture()
+    }
+
+    private fun bindImageCapture() {
+        imageCapture = ImageCapture.Builder()
+            .setFlashMode(flashMode)
+            .build()
+    }
+
 
     private fun requestCameraPermission() {
         val cameraPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
@@ -82,15 +115,50 @@ class PlantActivity : BaseActivity<PlantActivityBinding>(R.layout.plant_activity
                     it.setSurfaceProvider(binding.previewView.surfaceProvider)
                 }
 
+            bindImageCapture()
+
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
             try {
                 cameraProvider.unbindAll()
-                cameraProvider.bindToLifecycle(this, cameraSelector, preview)
+                cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture)
             } catch (e: Exception) {
 
             }
 
         }, ContextCompat.getMainExecutor(this))
+    }
+
+    private fun capturePhoto() {
+        val imageCapture = imageCapture ?: return
+
+        val name = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(Date())
+            .format(System.currentTimeMillis())
+        val contentValues = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, name)
+            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+                put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/Mandi")
+            }
+        }
+
+        val outputOptions = ImageCapture.OutputFileOptions
+            .Builder(contentResolver,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                contentValues)
+            .build()
+
+        imageCapture.takePicture(
+            outputOptions,
+            ContextCompat.getMainExecutor(this),
+            object : ImageCapture.OnImageSavedCallback {
+                override fun onError(exc: ImageCaptureException) {
+                }
+
+                override fun onImageSaved(output: ImageCapture.OutputFileResults){
+                    val msg = "Photo capture succeeded: ${output.savedUri}"
+                }
+            }
+        )
     }
 }
