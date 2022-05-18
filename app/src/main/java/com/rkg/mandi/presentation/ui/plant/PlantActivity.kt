@@ -26,6 +26,7 @@ class PlantActivity : BaseActivity<PlantActivityBinding>(R.layout.plant_activity
     private var imageCapture: ImageCapture? = null
 
     private var flashMode: Int = ImageCapture.FLASH_MODE_OFF
+    private var cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
     private val cameraPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
@@ -63,6 +64,7 @@ class PlantActivity : BaseActivity<PlantActivityBinding>(R.layout.plant_activity
     private fun initViews() {
         binding.apply {
             btnCapture.setOnSingleClickListener { capturePhoto() }
+            btnFlip.setOnSingleClickListener { flipCamera() }
         }
     }
 
@@ -77,9 +79,16 @@ class PlantActivity : BaseActivity<PlantActivityBinding>(R.layout.plant_activity
         bindImageCapture()
     }
 
+    private fun flipCamera() {
+        cameraSelector =
+            if (cameraSelector == CameraSelector.DEFAULT_FRONT_CAMERA) CameraSelector.DEFAULT_BACK_CAMERA else CameraSelector.DEFAULT_FRONT_CAMERA
+        startCamera()
+    }
+
     private fun bindImageCapture() {
         imageCapture = ImageCapture.Builder()
             .setFlashMode(flashMode)
+            .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
             .build()
     }
 
@@ -117,8 +126,6 @@ class PlantActivity : BaseActivity<PlantActivityBinding>(R.layout.plant_activity
 
             bindImageCapture()
 
-            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-
             try {
                 cameraProvider.unbindAll()
                 cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture)
@@ -143,9 +150,11 @@ class PlantActivity : BaseActivity<PlantActivityBinding>(R.layout.plant_activity
         }
 
         val outputOptions = ImageCapture.OutputFileOptions
-            .Builder(contentResolver,
+            .Builder(
+                contentResolver,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                contentValues)
+                contentValues
+            )
             .build()
 
         imageCapture.takePicture(
@@ -155,7 +164,7 @@ class PlantActivity : BaseActivity<PlantActivityBinding>(R.layout.plant_activity
                 override fun onError(exc: ImageCaptureException) {
                 }
 
-                override fun onImageSaved(output: ImageCapture.OutputFileResults){
+                override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                     val msg = "Photo capture succeeded: ${output.savedUri}"
                 }
             }
