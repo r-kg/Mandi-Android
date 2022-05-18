@@ -9,11 +9,10 @@ import com.rkg.mandi.presentation.model.state.StateResult
 import com.rkg.mandi.presentation.model.state.StateResult.*
 import com.rkg.mandi.presentation.ui.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,11 +27,20 @@ class MainViewModel @Inject constructor(
     private val mandiListState = useCase.selectAll().asState(emptyList())
 
     val itemModels: StateFlow<StateResult<List<MainItemModel>>> = mutableItemModels
-    val mandiList: StateFlow<List<Mandi>> = mandiListState
 
 
     fun setTargetMandi(id: Int) {
         targetMandiId = id
+    }
+
+    fun plant() = viewModelScope.launch {
+        withContext(Dispatchers.IO) {
+            val mandi = getMandiById(targetMandiId) ?: return@withContext
+
+            // Crate new mandi as updated one
+
+            useCase.update(mandi)
+        }
     }
 
     fun collectMandiFlow() = viewModelScope.launch {
@@ -47,5 +55,9 @@ class MainViewModel @Inject constructor(
                 mutableItemModels.emit(Failure(e))
             }.getOrThrow()
         }
+    }
+    
+    private fun getMandiById(id: Int?): Mandi? {
+        return mandiListState.value.firstOrNull { it.id == id }
     }
 }

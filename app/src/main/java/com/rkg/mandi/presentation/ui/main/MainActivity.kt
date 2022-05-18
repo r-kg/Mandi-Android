@@ -34,6 +34,7 @@ class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity) {
     private val plantLauncher = registerForActivityResult(StartActivityForResult()) {
         if (it.resultCode == RESULT_OK) {
             val uri = it.data?.getParcelableExtra<Uri>(PlantActivity.EXTRA_URI)
+            viewModel.plant()
         }
     }
 

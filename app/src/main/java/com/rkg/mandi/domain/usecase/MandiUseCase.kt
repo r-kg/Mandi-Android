@@ -26,7 +26,7 @@ class MandiUseCase @Inject constructor(
         it.firstOrNull()?.toDomain()
     }.getOrThrow()
 
-    suspend fun updated(mandi: Mandi) = runCatching {
+    suspend fun update(mandi: Mandi) = runCatching {
         repository.update(mandi.toEntity())
     }.getOrThrow()
 
