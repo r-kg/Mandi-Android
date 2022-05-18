@@ -1,6 +1,7 @@
 package com.rkg.mandi.presentation.ui.main
 
 import androidx.lifecycle.viewModelScope
+import com.rkg.mandi.domain.model.Mandi
 import com.rkg.mandi.domain.model.toMandiItemModel
 import com.rkg.mandi.domain.usecase.MandiUseCase
 import com.rkg.mandi.presentation.model.MainItemModel
@@ -9,7 +10,9 @@ import com.rkg.mandi.presentation.model.state.StateResult.*
 import com.rkg.mandi.presentation.ui.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,13 +21,22 @@ class MainViewModel @Inject constructor(
     private val useCase: MandiUseCase
 ) : BaseViewModel() {
 
+    private var targetMandiId: Int? = null
+
     private val mutableItemModels = MutableStateFlow<StateResult<List<MainItemModel>>>(None)
 
+    private val mandiListState = useCase.selectAll().asState(emptyList())
+
     val itemModels: StateFlow<StateResult<List<MainItemModel>>> = mutableItemModels
+    val mandiList: StateFlow<List<Mandi>> = mandiListState
 
 
-    fun fetchMandiFlow() = viewModelScope.launch {
-        useCase.selectAll().collect { domainModels ->
+    fun setTargetMandi(id: Int) {
+        targetMandiId = id
+    }
+
+    fun collectMandiFlow() = viewModelScope.launch {
+        mandiListState.collect { domainModels ->
             runCatching {
                 val mandiItemModels = domainModels.map { it.toMandiItemModel() }
 

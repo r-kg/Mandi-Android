@@ -47,7 +47,7 @@ class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity) {
         initViews()
         initObserves()
 
-        viewModel.fetchMandiFlow()
+        viewModel.collectMandiFlow()
     }
 
     private fun initViews() {
@@ -55,6 +55,7 @@ class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity) {
             override fun onClick(view: View, item: Any) {
                 when (item) {
                     is MandiTapEvent.PlantTap -> {
+                        viewModel.setTargetMandi(item.id)
                         launchPlantActivityForResult(plantLauncher)
                     }
                 }
