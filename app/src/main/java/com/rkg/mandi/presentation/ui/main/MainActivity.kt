@@ -19,6 +19,7 @@ import com.rkg.mandi.presentation.model.MainItemModel
 import com.rkg.mandi.presentation.model.state.StateResult
 import com.rkg.mandi.presentation.ui.BaseActivity
 import com.rkg.mandi.presentation.ui.plant.PlantActivity
+import com.rkg.mandi.presentation.utils.VerticalSpaceItemDecoration
 import com.rkg.mandi.presentation.utils.launchPlantActivityForResult
 import com.rkg.mandi.presentation.utils.startNewMandiActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -66,6 +67,9 @@ class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity) {
         binding.rvMain.apply {
             adapter = listAdapter
             layoutManager = LinearLayoutManager(context)
+
+            val spacing = resources.getDimensionPixelSize(R.dimen.spacing_6dp)
+            addItemDecoration(VerticalSpaceItemDecoration(spacing, spacing))
         }
     }
 
