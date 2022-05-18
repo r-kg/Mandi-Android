@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.DrawableRes
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
@@ -22,10 +23,9 @@ import java.util.concurrent.Executors
 class PlantActivity : BaseActivity<PlantActivityBinding>(R.layout.plant_activity) {
 
     private lateinit var cameraExecutor: ExecutorService
-
     private var imageCapture: ImageCapture? = null
 
-    private var flashMode: Int = ImageCapture.FLASH_MODE_OFF
+    private var flashState: FlashState = FlashState.ON
     private var cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
     private val cameraPermissionLauncher =
@@ -63,19 +63,21 @@ class PlantActivity : BaseActivity<PlantActivityBinding>(R.layout.plant_activity
 
     private fun initViews() {
         binding.apply {
+            btnClose.setOnSingleClickListener { finish() }
             btnCapture.setOnSingleClickListener { capturePhoto() }
             btnFlip.setOnSingleClickListener { flipCamera() }
+            btnFlash.setOnSingleClickListener { changeFlashMode() }
         }
     }
 
     private fun changeFlashMode() {
-        flashMode = when (flashMode) {
-            ImageCapture.FLASH_MODE_OFF -> ImageCapture.FLASH_MODE_ON
-            ImageCapture.FLASH_MODE_ON -> ImageCapture.FLASH_MODE_AUTO
-            ImageCapture.FLASH_MODE_AUTO -> ImageCapture.FLASH_MODE_OFF
-            else -> ImageCapture.FLASH_MODE_OFF
+        flashState = when (flashState) {
+            FlashState.OFF -> FlashState.ON
+            FlashState.ON -> FlashState.AUTO
+            FlashState.AUTO -> FlashState.OFF
         }
 
+        binding.btnFlash.setImageDrawable(getDrawable(flashState.icon))
         bindImageCapture()
     }
 
@@ -87,7 +89,7 @@ class PlantActivity : BaseActivity<PlantActivityBinding>(R.layout.plant_activity
 
     private fun bindImageCapture() {
         imageCapture = ImageCapture.Builder()
-            .setFlashMode(flashMode)
+            .setFlashMode(flashState.flashMode)
             .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
             .build()
     }
@@ -169,5 +171,14 @@ class PlantActivity : BaseActivity<PlantActivityBinding>(R.layout.plant_activity
                 }
             }
         )
+    }
+
+    enum class FlashState(
+        val flashMode: Int,
+        @DrawableRes val icon: Int
+    ) {
+        ON(ImageCapture.FLASH_MODE_ON, R.drawable.ic_flash_on),
+        OFF(ImageCapture.FLASH_MODE_OFF, R.drawable.ic_flash_off),
+        AUTO(ImageCapture.FLASH_MODE_AUTO, R.drawable.ic_flash_auto);
     }
 }
