@@ -5,12 +5,16 @@ import com.rkg.mandi.R
 import com.rkg.mandi.presentation.binding.MandiTapEvent
 import com.rkg.mandi.presentation.binding.MandiTapEvent.*
 import com.rkg.mandi.presentation.binding.SimpleDiffCallback.*
+import java.util.*
 
 sealed class MainItemModel(@LayoutRes val layoutResId: Int) : DiffCallback {
 
     data class MandiItemModel(
         val id: Int,
         val title: String,
+        val updated: Boolean,
+        val lastUpdated: Double?,
+        val streakStarted: Double?,
         val plantTap: MandiTapEvent = PlantTap(id)
     ) : MainItemModel(R.layout.main_mandi_item_model)
 
@@ -24,7 +28,7 @@ sealed class MainItemModel(@LayoutRes val layoutResId: Int) : DiffCallback {
 
     override fun areContentsTheSame(other: DiffCallback): Boolean {
         return if (this is MandiItemModel && other is MandiItemModel) {
-            this.title == other.title
+            this.lastUpdated == other.lastUpdated
         } else {
             super.areContentsTheSame(other)
         }

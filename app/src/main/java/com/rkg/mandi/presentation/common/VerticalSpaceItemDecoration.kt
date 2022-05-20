@@ -1,4 +1,4 @@
-package com.rkg.mandi.presentation.utils
+package com.rkg.mandi.presentation.common
 
 import android.graphics.Rect
 import android.view.View

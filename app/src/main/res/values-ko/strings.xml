@@ -6,6 +6,10 @@
     <string name="done">완료</string>
     <string name="delete">삭제</string>
     <string name="reset">초기화</string>
+    <string name="today">오늘</string>
+    <string name="days_ago">%1$d일 전</string>
+    <string name="no_record">기록 없음</string>
+    <string name="yesterday">어제</string>
     <string name="title_new_mandi">새 만디</string>
     <string name="hint_new_mandi_title">매일매일 기록할 만디를 적어주세요</string>
     <string name="hint_new_mandi_desc">만디에 대한 설명이나 메모를 추가로 적어주세요</string>
@@ -16,4 +20,5 @@
     <string name="content_desc_flash">플래쉬</string>
     <string name="content_desc_flip">뒤집기</string>
     <string name="content_desc_capture">촬영</string>
+    <string name="content_desc_planted_image">심은 사진</string>
 </resources>
