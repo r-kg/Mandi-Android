@@ -4,6 +4,7 @@ import android.os.Parcelable
 import com.rkg.mandi.data.model.MandiEntity
 import com.rkg.mandi.presentation.model.MainItemModel
 import kotlinx.parcelize.Parcelize
+import java.util.*
 
 @Parcelize
 data class Mandi(
@@ -26,7 +27,12 @@ fun Mandi.toMandiItemModel() = MainItemModel.MandiItemModel(
     id = id,
     title = title,
     lastUpdated = updatedAt,
-    streakStarted = streakStartedAt
+    streakStarted = streakStartedAt,
+    updated = updatedAt?.let {
+        val date = Calendar.getInstance().apply { timeInMillis = (it * 1000).toLong() }
+        val today = Calendar.getInstance()
+        (today.get(Calendar.DAY_OF_YEAR) == date.get(Calendar.DAY_OF_YEAR))
+    } ?: false
 )
 
 fun Mandi.updatePlant(currentTime: Double) = Mandi(
