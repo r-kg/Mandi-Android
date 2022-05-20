@@ -10,6 +10,7 @@
         <item name="colorOnSecondary">@color/white_primary</item>
         <item name="colorSurface">@color/white</item>
         <item name="backgroundColor">@color/white_primary</item>
+        <item name="iconTint">@color/black_primary</item>
 
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/backgroundColor</item>
