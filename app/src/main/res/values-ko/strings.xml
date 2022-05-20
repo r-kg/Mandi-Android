@@ -20,4 +20,5 @@
     <string name="content_desc_flash">플래쉬</string>
     <string name="content_desc_flip">뒤집기</string>
     <string name="content_desc_capture">촬영</string>
+    <string name="content_desc_planted_image">심은 사진</string>
 </resources>

@@ -5,12 +5,14 @@ import com.rkg.mandi.R
 import com.rkg.mandi.presentation.binding.MandiTapEvent
 import com.rkg.mandi.presentation.binding.MandiTapEvent.*
 import com.rkg.mandi.presentation.binding.SimpleDiffCallback.*
+import java.util.*
 
 sealed class MainItemModel(@LayoutRes val layoutResId: Int) : DiffCallback {
 
     data class MandiItemModel(
         val id: Int,
         val title: String,
+        val updated: Boolean,
         val lastUpdated: Double?,
         val streakStarted: Double?,
         val plantTap: MandiTapEvent = PlantTap(id)

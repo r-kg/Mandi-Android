@@ -91,9 +91,23 @@
                 android:onClick="@{(view) -> presenter.onClick(view, item.plantTap)}"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_add"
+                app:isGone="@{item.updated}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/ivPlanted"
+                android:layout_width="64dp"
+                android:layout_height="0dp"
+                android:background="@color/gray20"
+                android:contentDescription="@string/content_desc_planted_image"
+                android:scaleType="center"
+                app:isVisible="@{item.updated}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="gone" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
