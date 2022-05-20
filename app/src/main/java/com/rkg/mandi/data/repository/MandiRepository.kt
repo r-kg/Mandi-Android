@@ -17,4 +17,6 @@ class MandiRepository @Inject constructor(
 
     suspend fun insert(mandiEntity: MandiEntity) =
         localDataSource.mandiDao().insert(mandiEntity)
+
+    suspend fun delete(id: Int) = localDataSource.mandiDao().delete(id)
 }

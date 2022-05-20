@@ -35,4 +35,10 @@ class MandiUseCase @Inject constructor(
     }.onFailure { throwable ->
         // on failure
     }.getOrThrow()
+
+    suspend fun deleteMandi(id: Int) = runCatching {
+        repository.delete(id)
+    }.onFailure { throwable ->
+        // on failure
+    }.getOrThrow()
 }

@@ -71,7 +71,7 @@ class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity) {
             override fun onLongClick(view: View, item: Any): Boolean {
                 when (item) {
                     is MandiItemModel -> {
-                        showMandiMenu()
+                        showMandiMenu(item.id)
                         return true
                     }
                 }
@@ -106,12 +106,12 @@ class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity) {
         }
     }
 
-    private fun showMandiMenu() {
+    private fun showMandiMenu(id: Int) {
         val menus = resources.getStringArray(R.array.choose_mandi_menu)
         AlertDialog.Builder(this).apply {
             setItems(menus) { _, which ->
                 when (menus[which]) {
-                    getString(R.string.delete) -> {}
+                    getString(R.string.delete) -> viewModel.deleteMandi(id)
                     getString(R.string.reset) -> {}
                     else -> {
                         // nothing to do

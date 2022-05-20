@@ -44,6 +44,12 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun deleteMandi(id: Int) = viewModelScope.launch {
+        withContext(Dispatchers.IO) {
+            useCase.deleteMandi(id)
+        }
+    }
+
     fun collectMandiFlow() = viewModelScope.launch {
         mandiListState.collect { domainModels ->
             runCatching {

@@ -18,4 +18,7 @@ interface MandiDao {
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun insert(mandi: MandiEntity)
+
+    @Query("DELETE FROM MandiEntity WHERE id = :id")
+    suspend fun delete(id: Int)
 }
