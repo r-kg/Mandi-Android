@@ -13,11 +13,11 @@ interface MandiDao {
     @Query("SELECT * FROM MandiEntity WHERE id == :id")
     suspend fun selectById(id: Int): List<MandiEntity>
 
-    @Update
-    suspend fun update(mandi: MandiEntity): Int
-
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun insert(mandi: MandiEntity)
+
+    @Update
+    suspend fun update(mandi: MandiEntity): Int
 
     @Query("DELETE FROM MandiEntity WHERE id = :id")
     suspend fun delete(id: Int)

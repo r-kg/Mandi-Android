@@ -47,7 +47,7 @@ class MainViewModel @Inject constructor(
 
     fun deleteMandi(id: Int) = viewModelScope.launch {
         withContext(Dispatchers.IO) {
-            useCase.deleteMandi(id)
+            useCase.delete(id)
         }
     }
 
