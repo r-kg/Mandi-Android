@@ -36,28 +36,22 @@ class MainViewModel @Inject constructor(
         targetMandiId = id
     }
 
-    fun plant() = viewModelScope.launch {
-        withContext(Dispatchers.IO) {
-            val mandi = getMandiById(targetMandiId) ?: return@withContext
-            val updated = mandi.updatePlant(CalendarUtil.currentTimeInMillis() / 1000.0)
+    fun plant() = runOnIO {
+        val mandi = getMandiById(targetMandiId) ?: return@runOnIO
+        val updated = mandi.updatePlant(CalendarUtil.currentTimeInMillis() / 1000.0)
 
-            useCase.update(updated)
-        }
+        useCase.update(updated)
     }
 
-    fun deleteMandi(id: Int) = viewModelScope.launch {
-        withContext(Dispatchers.IO) {
-            useCase.delete(id)
-        }
+    fun deleteMandi(id: Int) = runOnIO {
+        useCase.delete(id)
     }
 
-    fun resetMandi(id: Int) = viewModelScope.launch {
-        withContext(Dispatchers.IO) {
-            val mandi = getMandiById(targetMandiId) ?: return@withContext
-            val reset = mandi.reset()
+    fun resetMandi(id: Int) = runOnIO {
+        val mandi = getMandiById(targetMandiId) ?: return@runOnIO
+        val reset = mandi.reset()
 
-            useCase.update(reset)
-        }
+        useCase.update(reset)
     }
 
     fun collectMandiFlow() = viewModelScope.launch {
