@@ -1,14 +1,18 @@
 package com.rkg.mandi.presentation.binding
 
+import android.net.Uri
 import android.text.format.DateUtils
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.rkg.mandi.R
+import com.rkg.mandi.presentation.utils.ImageLoader
 import java.util.*
 
 @BindingAdapter("isVisible")
@@ -29,6 +33,24 @@ fun setGone(view: View, value: Boolean?) {
 @BindingAdapter("hasFixedSize")
 fun setHasFixedSize(recyclerView: RecyclerView, hasFixedSize: Boolean) {
     recyclerView.setHasFixedSize(hasFixedSize)
+}
+
+@BindingAdapter("imageUrl")
+fun setImageUrl(imageView: ImageView, imageUrl: String?) {
+    ImageLoader.with(imageView.context)?.run {
+        load(imageUrl)
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(imageView)
+    }
+}
+
+@BindingAdapter("imageUri")
+fun setImageUri(imageView: ImageView, imageUri: Uri?) {
+    ImageLoader.with(imageView.context)?.run {
+        load(imageUri)
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(imageView)
+    }
 }
 
 @BindingAdapter("lastUpdatedTime")
