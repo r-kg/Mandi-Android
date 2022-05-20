@@ -16,6 +16,7 @@ import com.rkg.mandi.R
 import com.rkg.mandi.databinding.MainActivityBinding
 import com.rkg.mandi.presentation.binding.MandiTapEvent
 import com.rkg.mandi.presentation.binding.SimpleDataBindingPresenter
+import com.rkg.mandi.presentation.common.SlideItemAnimator
 import com.rkg.mandi.presentation.model.MainItemModel
 import com.rkg.mandi.presentation.model.MainItemModel.*
 import com.rkg.mandi.presentation.model.state.StateResult
@@ -82,6 +83,7 @@ class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity) {
         binding.rvMain.apply {
             adapter = listAdapter
             layoutManager = LinearLayoutManager(context)
+            itemAnimator = SlideItemAnimator()
 
             val spacing = resources.getDimensionPixelSize(R.dimen.spacing_6dp)
             addItemDecoration(VerticalSpaceItemDecoration(spacing, spacing))
@@ -104,6 +106,15 @@ class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity) {
                 }
             }
         }
+    }
+
+    private fun setUseAnimation(usesAnimation: Boolean) {
+        val itemAnimator = binding.rvMain.itemAnimator as? SlideItemAnimator ?: return
+        if (itemAnimator.usesAnimation == usesAnimation) {
+            return
+        }
+
+        itemAnimator.usesAnimation = usesAnimation
     }
 
     private fun showMandiMenu(id: Int) {
@@ -130,6 +141,7 @@ class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity) {
         return when (item.itemId) {
             R.id.new_mandi -> {
                 startNewMandiActivity()
+                setUseAnimation(true)
                 true
             }
             else -> super.onOptionsItemSelected(item)
