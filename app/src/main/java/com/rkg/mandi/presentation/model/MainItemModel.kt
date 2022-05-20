@@ -12,7 +12,7 @@ sealed class MainItemModel(@LayoutRes val layoutResId: Int) : DiffCallback {
         val id: Int,
         val title: String,
         val lastUpdated: Double?,
-        val streakCount: String,
+        val streakStarted: Double?,
         val plantTap: MandiTapEvent = PlantTap(id)
     ) : MainItemModel(R.layout.main_mandi_item_model)
 

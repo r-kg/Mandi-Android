@@ -26,7 +26,7 @@ fun Mandi.toMandiItemModel() = MainItemModel.MandiItemModel(
     id = id,
     title = title,
     lastUpdated = updatedAt,
-    streakCount = "0"
+    streakStarted = streakStartedAt
 )
 
 fun Mandi.updatePlant(currentTime: Double) = Mandi(

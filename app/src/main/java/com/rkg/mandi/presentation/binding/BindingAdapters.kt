@@ -58,3 +58,14 @@ fun setLastUpdatedTime(textView: TextView, time: Double?) {
 
     textView.text = dateTimeString
 }
+
+@BindingAdapter("streakDay")
+fun setStreakDay(textView: TextView, time: Double?) {
+    textView.text = time?.let {
+        val date = Calendar.getInstance().apply { timeInMillis = (it * 1000).toLong() }
+        val today = Calendar.getInstance()
+
+        val dayDiff = today.get(Calendar.DAY_OF_YEAR) - date.get(Calendar.DAY_OF_YEAR)
+        "${dayDiff + 1}"
+    } ?: "0"
+}

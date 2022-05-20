@@ -62,12 +62,12 @@
                 style="@style/Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{item.streakCount}"
                 app:layout_constraintBottom_toTopOf="@id/tvDescStreak"
                 app:layout_constraintEnd_toEndOf="@id/tvDescStreak"
                 app:layout_constraintStart_toStartOf="@id/tvDescStreak"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed"
+                app:streakDay="@{item.streakStarted}"
                 tools:text="10" />
 
             <androidx.appcompat.widget.AppCompatTextView
