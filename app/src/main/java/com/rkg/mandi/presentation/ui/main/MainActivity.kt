@@ -17,6 +17,7 @@ import com.rkg.mandi.databinding.MainActivityBinding
 import com.rkg.mandi.presentation.binding.MandiTapEvent
 import com.rkg.mandi.presentation.binding.SimpleDataBindingPresenter
 import com.rkg.mandi.presentation.model.MainItemModel
+import com.rkg.mandi.presentation.model.MainItemModel.*
 import com.rkg.mandi.presentation.model.state.StateResult
 import com.rkg.mandi.presentation.ui.BaseActivity
 import com.rkg.mandi.presentation.ui.plant.PlantActivity
@@ -57,11 +58,24 @@ class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity) {
         listAdapter = MainListAdapter(object : SimpleDataBindingPresenter() {
             override fun onClick(view: View, item: Any) {
                 when (item) {
+                    is MandiItemModel -> {
+                        // start detail view
+                    }
                     is MandiTapEvent.PlantTap -> {
                         viewModel.setTargetMandi(item.id)
                         launchPlantActivityForResult(plantLauncher)
                     }
                 }
+            }
+
+            override fun onLongClick(view: View, item: Any): Boolean {
+                when (item) {
+                    is MandiItemModel -> {
+                        showMandiMenu()
+                        return true
+                    }
+                }
+                return super.onLongClick(view, item)
             }
         })
 
