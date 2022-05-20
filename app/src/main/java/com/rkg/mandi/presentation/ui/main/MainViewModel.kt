@@ -43,15 +43,15 @@ class MainViewModel @Inject constructor(
         useCase.update(updated)
     }
 
-    fun deleteMandi(id: Int) = runOnIO {
-        useCase.delete(id)
-    }
-
     fun resetMandi(id: Int) = runOnIO {
-        val mandi = getMandiById(targetMandiId) ?: return@runOnIO
+        val mandi = getMandiById(id) ?: return@runOnIO
         val reset = mandi.reset()
 
         useCase.update(reset)
+    }
+
+    fun deleteMandi(id: Int) = runOnIO {
+        useCase.delete(id)
     }
 
     fun collectMandiFlow() = viewModelScope.launch {
