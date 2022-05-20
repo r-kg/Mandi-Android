@@ -1,11 +1,30 @@
 package com.rkg.mandi.presentation.binding
 
 import android.text.format.DateUtils
+import android.view.View
 import android.widget.TextView
+import androidx.core.view.isGone
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.rkg.mandi.R
 import java.util.*
+
+@BindingAdapter("isVisible")
+fun setVisible(view: View, value: Boolean?) {
+    view.isVisible = value ?: false
+}
+
+@BindingAdapter("isInvisible")
+fun setInvisible(view: View, value: Boolean?) {
+    view.isInvisible = value ?: false
+}
+
+@BindingAdapter("isGone")
+fun setGone(view: View, value: Boolean?) {
+    view.isGone = value ?: false
+}
 
 @BindingAdapter("hasFixedSize")
 fun setHasFixedSize(recyclerView: RecyclerView, hasFixedSize: Boolean) {
@@ -69,3 +88,4 @@ fun setStreakDay(textView: TextView, time: Double?) {
         "${dayDiff + 1}"
     } ?: "0"
 }
+
