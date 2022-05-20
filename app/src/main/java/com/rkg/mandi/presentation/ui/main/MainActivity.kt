@@ -17,12 +17,11 @@ import com.rkg.mandi.databinding.MainActivityBinding
 import com.rkg.mandi.presentation.binding.MandiTapEvent
 import com.rkg.mandi.presentation.binding.SimpleDataBindingPresenter
 import com.rkg.mandi.presentation.common.SlideItemAnimator
-import com.rkg.mandi.presentation.model.MainItemModel
 import com.rkg.mandi.presentation.model.MainItemModel.*
 import com.rkg.mandi.presentation.model.state.StateResult
 import com.rkg.mandi.presentation.ui.BaseActivity
 import com.rkg.mandi.presentation.ui.plant.PlantActivity
-import com.rkg.mandi.presentation.utils.VerticalSpaceItemDecoration
+import com.rkg.mandi.presentation.common.VerticalSpaceItemDecoration
 import com.rkg.mandi.presentation.utils.launchPlantActivityForResult
 import com.rkg.mandi.presentation.utils.startNewMandiActivity
 import dagger.hilt.android.AndroidEntryPoint
