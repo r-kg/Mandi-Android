@@ -11,7 +11,7 @@ sealed class MainItemModel(@LayoutRes val layoutResId: Int) : DiffCallback {
     data class MandiItemModel(
         val id: Int,
         val title: String,
-        val lastUpdated: String,
+        val lastUpdated: Double?,
         val streakCount: String,
         val plantTap: MandiTapEvent = PlantTap(id)
     ) : MainItemModel(R.layout.main_mandi_item_model)

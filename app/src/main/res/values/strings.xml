@@ -5,6 +5,10 @@
     <string name="done">Done</string>
     <string name="delete">Delete</string>
     <string name="reset">Reset</string>
+    <string name="today">Today</string>
+    <string name="days_ago">%1$ddays ago</string>
+    <string name="no_record">No Record</string>
+    <string name="yesterday">Yesterday</string>
     <string name="title_new_mandi">New Mandi</string>
     <string name="hint_new_mandi_title">Type your Mandi here for daily plant</string>
     <string name="hint_new_mandi_desc">Type more information of Mandi or your memo</string>

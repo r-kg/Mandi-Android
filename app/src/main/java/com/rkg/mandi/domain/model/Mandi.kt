@@ -25,7 +25,7 @@ fun Mandi.toEntity() = MandiEntity(
 fun Mandi.toMandiItemModel() = MainItemModel.MandiItemModel(
     id = id,
     title = title,
-    lastUpdated = updatedAt.toString(),
+    lastUpdated = updatedAt,
     streakCount = "0"
 )
 
