@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="white">#FFFFFF</color>
+    <color name="white_primary">#F7FFFA</color>
     <color name="black">#000000</color>
+    <color name="black_primary">#0F1311</color>
     <color name="gray60">#828282</color>
     <color name="gray40">#c5c5c5</color>
     <color name="gray20">#ececec</color>
 
-    <color name="primary">#22ADE1</color>
-    <color name="primary_variant">#224DE1</color>
-    <color name="secondary">#E122AD</color>
-    <color name="secondary_variant">#E1224D</color>
+    <color name="primary">#1BB555</color>
+    <color name="primary_variant">#2BD282</color>
+    <color name="secondary">#A05819</color>
+    <color name="secondary_variant">#AD531F</color>
+
 
     <color name="bright_sky">#E9F8F9</color>
     <color name="dark_sky">#475152</color>

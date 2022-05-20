@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -12,9 +13,9 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/container"
-        android:background="?attr/backgroundColor"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="?attr/backgroundColor">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
@@ -40,7 +41,11 @@
                 android:id="@+id/rvMain"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:hasFixedSize="@{true}" />
+                android:clipToPadding="false"
+                android:paddingTop="10dp"
+                app:hasFixedSize="@{true}"
+                tools:itemCount="1"
+                tools:listitem="@layout/main_mandi_item_model" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

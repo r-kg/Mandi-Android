@@ -2,6 +2,7 @@ package com.rkg.mandi.presentation.ui.main
 
 import androidx.lifecycle.viewModelScope
 import com.rkg.mandi.domain.model.Mandi
+import com.rkg.mandi.domain.model.reset
 import com.rkg.mandi.domain.model.updatePlant
 import com.rkg.mandi.domain.model.toMandiItemModel
 import com.rkg.mandi.domain.usecase.MandiUseCase
@@ -35,13 +36,22 @@ class MainViewModel @Inject constructor(
         targetMandiId = id
     }
 
-    fun plant() = viewModelScope.launch {
-        withContext(Dispatchers.IO) {
-            val mandi = getMandiById(targetMandiId) ?: return@withContext
-            val updated = mandi.updatePlant(CalendarUtil.currentTimeInMillis() / 1000.0)
+    fun plant() = runOnIO {
+        val mandi = getMandiById(targetMandiId) ?: return@runOnIO
+        val updated = mandi.updatePlant(CalendarUtil.currentTimeInMillis() / 1000.0)
 
-            useCase.update(updated)
-        }
+        useCase.update(updated)
+    }
+
+    fun resetMandi(id: Int) = runOnIO {
+        val mandi = getMandiById(id) ?: return@runOnIO
+        val reset = mandi.reset()
+
+        useCase.update(reset)
+    }
+
+    fun deleteMandi(id: Int) = runOnIO {
+        useCase.delete(id)
     }
 
     fun collectMandiFlow() = viewModelScope.launch {

@@ -32,7 +32,7 @@ class NewMandiViewModel @Inject constructor(
 
         _state.emit(Loading)
         runCatching {
-            useCase.insertMandi(
+            useCase.insert(
                 Mandi(title = title.value, description = description.value)
             )
         }.onSuccess {

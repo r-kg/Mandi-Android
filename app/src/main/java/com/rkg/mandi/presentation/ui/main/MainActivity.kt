@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts.*
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -15,10 +16,13 @@ import com.rkg.mandi.R
 import com.rkg.mandi.databinding.MainActivityBinding
 import com.rkg.mandi.presentation.binding.MandiTapEvent
 import com.rkg.mandi.presentation.binding.SimpleDataBindingPresenter
+import com.rkg.mandi.presentation.common.SlideItemAnimator
 import com.rkg.mandi.presentation.model.MainItemModel
+import com.rkg.mandi.presentation.model.MainItemModel.*
 import com.rkg.mandi.presentation.model.state.StateResult
 import com.rkg.mandi.presentation.ui.BaseActivity
 import com.rkg.mandi.presentation.ui.plant.PlantActivity
+import com.rkg.mandi.presentation.utils.VerticalSpaceItemDecoration
 import com.rkg.mandi.presentation.utils.launchPlantActivityForResult
 import com.rkg.mandi.presentation.utils.startNewMandiActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -55,17 +59,34 @@ class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity) {
         listAdapter = MainListAdapter(object : SimpleDataBindingPresenter() {
             override fun onClick(view: View, item: Any) {
                 when (item) {
+                    is MandiItemModel -> {
+                        // start detail view
+                    }
                     is MandiTapEvent.PlantTap -> {
                         viewModel.setTargetMandi(item.id)
                         launchPlantActivityForResult(plantLauncher)
                     }
                 }
             }
+
+            override fun onLongClick(view: View, item: Any): Boolean {
+                when (item) {
+                    is MandiItemModel -> {
+                        showMandiMenu(item.id)
+                        return true
+                    }
+                }
+                return super.onLongClick(view, item)
+            }
         })
 
         binding.rvMain.apply {
             adapter = listAdapter
             layoutManager = LinearLayoutManager(context)
+            itemAnimator = SlideItemAnimator()
+
+            val spacing = resources.getDimensionPixelSize(R.dimen.spacing_6dp)
+            addItemDecoration(VerticalSpaceItemDecoration(spacing, spacing))
         }
     }
 
@@ -87,6 +108,30 @@ class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity) {
         }
     }
 
+    private fun setUseAnimation(usesAnimation: Boolean) {
+        val itemAnimator = binding.rvMain.itemAnimator as? SlideItemAnimator ?: return
+        if (itemAnimator.usesAnimation == usesAnimation) {
+            return
+        }
+
+        itemAnimator.usesAnimation = usesAnimation
+    }
+
+    private fun showMandiMenu(id: Int) {
+        val menus = resources.getStringArray(R.array.choose_mandi_menu)
+        AlertDialog.Builder(this).apply {
+            setItems(menus) { _, which ->
+                when (menus[which]) {
+                    getString(R.string.delete) -> viewModel.deleteMandi(id)
+                    getString(R.string.reset) -> viewModel.resetMandi(id)
+                    else -> {
+                        // nothing to do
+                    }
+                }
+            }.show()
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         return true
@@ -96,6 +141,7 @@ class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity) {
         return when (item.itemId) {
             R.id.new_mandi -> {
                 startNewMandiActivity()
+                setUseAnimation(true)
                 true
             }
             else -> super.onOptionsItemSelected(item)

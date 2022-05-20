@@ -21,4 +21,12 @@ sealed class MainItemModel(@LayoutRes val layoutResId: Int) : DiffCallback {
             super.areItemsTheSame(other)
         }
     }
+
+    override fun areContentsTheSame(other: DiffCallback): Boolean {
+        return if (this is MandiItemModel && other is MandiItemModel) {
+            this.title == other.title
+        } else {
+            super.areContentsTheSame(other)
+        }
+    }
 }
