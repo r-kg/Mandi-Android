@@ -2,6 +2,7 @@ package com.rkg.mandi.presentation.ui.main
 
 import androidx.lifecycle.viewModelScope
 import com.rkg.mandi.domain.model.Mandi
+import com.rkg.mandi.domain.model.reset
 import com.rkg.mandi.domain.model.updatePlant
 import com.rkg.mandi.domain.model.toMandiItemModel
 import com.rkg.mandi.domain.usecase.MandiUseCase
@@ -47,6 +48,15 @@ class MainViewModel @Inject constructor(
     fun deleteMandi(id: Int) = viewModelScope.launch {
         withContext(Dispatchers.IO) {
             useCase.deleteMandi(id)
+        }
+    }
+
+    fun resetMandi(id: Int) = viewModelScope.launch {
+        withContext(Dispatchers.IO) {
+            val mandi = getMandiById(targetMandiId) ?: return@withContext
+            val reset = mandi.reset()
+
+            useCase.update(reset)
         }
     }
 

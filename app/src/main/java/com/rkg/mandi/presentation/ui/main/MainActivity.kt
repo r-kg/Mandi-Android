@@ -112,7 +112,7 @@ class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity) {
             setItems(menus) { _, which ->
                 when (menus[which]) {
                     getString(R.string.delete) -> viewModel.deleteMandi(id)
-                    getString(R.string.reset) -> {}
+                    getString(R.string.reset) -> viewModel.resetMandi(id)
                     else -> {
                         // nothing to do
                     }

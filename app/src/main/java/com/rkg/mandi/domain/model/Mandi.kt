@@ -34,3 +34,11 @@ fun Mandi.updatePlant(currentTime: Double) = Mandi(
     updatedAt = currentTime,
     streakStartedAt = streakStartedAt ?: currentTime
 )
+
+fun Mandi.reset() = Mandi(
+    id = id,
+    title = title,
+    description = description,
+    updatedAt = null,
+    streakStartedAt = null
+)
